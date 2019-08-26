@@ -65,6 +65,31 @@ class LocationController {
       });
     }).catch(next);
   }
+
+  /**
+   * @description Get location method
+   * @param  {object} req body of the request
+   * @param  {object} res  body of the response message
+   * @param  {function} next next function to be called
+   * @returns {object} The body of the response message
+   */
+  static getLocations(req, res, next) {
+    Location.findAll()
+      .then((locations) => {
+        if (locations.length >= 1) {
+          return res.status(200).json({
+            message: 'See the locations I found',
+            status: 'success',
+            locations
+          });
+        }
+        return res.status(200).json({
+          message: 'You don\'t have any location information yet',
+          status: 'success'
+        });
+      })
+      .catch(next);
+  }
 }
 
 export default LocationController;
