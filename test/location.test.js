@@ -125,4 +125,18 @@ describe('Tests for location controller', () => {
         });
     });
   });
+
+  describe('Test for get locations', () => {
+    it('should get all location successfully', (done) => {
+      chai.request(server).get('/api/location')
+        .end((err, res) => {
+          const { message, status, locations } = res.body;
+          res.should.have.status(200);
+          message.should.equal('See the locations I found');
+          status.should.equal('success');
+          locations.should.be.an('array');
+          done();
+        });
+    });
+  });
 });
