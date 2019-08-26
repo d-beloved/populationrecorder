@@ -1,0 +1,26 @@
+{
+  "name": "populationrecorder",
+  "version": "1.0.0",
+  "description": "A population management system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d-beloved/populationrecorder.git"
+  },
+  "keywords": [
+    "Node",
+    "Express"
+  ],
+  "author": "D-beloved",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/d-beloved/populationrecorder/issues"
+  },
+  "homepage": "https://github.com/d-beloved/populationrecorder#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
