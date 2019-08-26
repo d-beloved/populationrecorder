@@ -17,6 +17,4 @@ script:
 after_success:
   - npm run coverage
   - npm run report-coverage
-
-after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

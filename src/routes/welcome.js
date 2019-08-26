@@ -8,6 +8,7 @@ welcomeRoute.all('*', (req, res) => {
     availableEndpoints: {
       createLocation: 'POST /api/location',
       getLocations: 'GET /api/location',
+      updateLocation: 'PUT /api/location/:locationId',
     }
   });
 });

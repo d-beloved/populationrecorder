@@ -139,4 +139,71 @@ describe('Tests for location controller', () => {
         });
     });
   });
+
+  describe('Test for Update locations', () => {
+    it('should return an error if a non integer id is inserted', (done) => {
+      chai.request(server).put('/api/location/a').set('Accept', 'application/json')
+        .send({
+          malePopulation: '10',
+          femalePopulation: '20',
+          locality: 'Abuja'
+        })
+        .end((err, res) => {
+          const { error, status } = res.body;
+          res.should.have.status(400);
+          error.message.should.equal('please enter a valid location Id');
+          status.should.equal('error');
+          done();
+        });
+    });
+
+    it('should return an error if a non integer population number is inserted', (done) => {
+      chai.request(server).put('/api/location/1').set('Accept', 'application/json')
+        .send({
+          malePopulation: '10r',
+          femalePopulation: '20',
+          locality: 'Abuja'
+        })
+        .end((err, res) => {
+          const { error, status } = res.body;
+          res.should.have.status(400);
+          error.should.equal('Please enter a valid number for the male and female population in this location');
+          status.should.equal('error');
+          done();
+        });
+    });
+
+    it('should return a 404 error if location is not found ', (done) => {
+      chai.request(server).put('/api/location/5').set('Accept', 'application/json')
+        .send({
+          malePopulation: '10',
+          femalePopulation: '20',
+          locality: 'Abuja'
+        })
+        .end((err, res) => {
+          const { error, status } = res.body;
+          res.should.have.status(404);
+          error.message.should.equal('location not found');
+          status.should.equal('error');
+          done();
+        });
+    });
+
+    it('should update successfully ', (done) => {
+      chai.request(server).put('/api/location/1').set('Accept', 'application/json')
+        .send({
+          name: 'Amity, Mende Maryland',
+          malePopulation: '10',
+          femalePopulation: '20',
+          locality: 'Lagos'
+        })
+        .end((err, res) => {
+          const { message, status } = res.body;
+          res.should.have.status(200);
+          message.should.equal('Location information updated successfully');
+          status.should.equal('success');
+          done();
+        });
+    });
+  });
 });
