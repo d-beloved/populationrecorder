@@ -20,7 +20,7 @@ app.set('view engine', 'pug');
 app.use(router);
 
 // console.log('environment', process.env.DATABASE_URL);
-const server = app.listen(process.env.PORT || 3101, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
   log(`Listening on port ${server.address().port}`);
 });
 
