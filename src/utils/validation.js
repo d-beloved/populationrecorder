@@ -35,32 +35,6 @@ class Validation {
       status: 'error'
     };
   }
-
-  // /**
-  //  *  @description method for validation of send sms
-  //  *  @param {object} data body of the user's request
-  //  *  @returns {object} The body of  the response message
-  //  */
-  // static validateSendSMS(data) {
-  //   const error = {};
-  //   data.message = data.message ? data.message : '';
-  //   data.sender = data.sender ? data.sender : '';
-  //   data.receiver = data.receiver ? data.receiver : '';
-  //   if (!(data.message)) {
-  //     error.message = 'Please type a message';
-  //   }
-  //   if (!(data.sender)) {
-  //     error.sender = 'Please input the sender of the message';
-  //   }
-  //   if (!(data.receiver)) {
-  //     error.receiver = 'Please input the receiver of the message';
-  //   }
-  //   return {
-  //     error,
-  //     isValid: isEmpty(error),
-  //     status: 'error'
-  //   };
-  // }
 }
 
 export default Validation;

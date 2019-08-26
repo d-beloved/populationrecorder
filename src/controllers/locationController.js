@@ -6,6 +6,7 @@ import { Location } from '../models';
 import Validation from '../utils/validation';
 import trimInput from '../utils/trimInput';
 
+
 /**
  * @description controller class with methods for location endpoints
  * @class LocationController
@@ -87,6 +88,64 @@ class LocationController {
           message: 'You don\'t have any location information yet',
           status: 'success'
         });
+      })
+      .catch(next);
+  }
+
+
+  /**
+   * @description Update location method
+   * @param  {object} req body of the request
+   * @param  {object} res  body of the response message
+   * @param  {function} next next function to be called
+   * @returns {object} The body of the response message
+   */
+  static updateLocation(req, res, next) {
+    const {
+      name, malePopulation, femalePopulation, locality
+    } = req.body;
+
+    const locationId = parseInt(req.params.locationId, 10);
+    if (isNaN(locationId)) {
+      return res.status(400).json({
+        error: { message: 'please enter a valid location Id' },
+        status: 'error'
+      });
+    }
+
+    if (isNaN(malePopulation) || isNaN(femalePopulation)) {
+      return res.status(400).json({
+        status: 'error',
+        error: 'Please enter a valid number for the male and female population in this location'
+      });
+    }
+
+    Location.findOne({
+      where: {
+        id: locationId
+      }
+    })
+      .then((location) => {
+        if (!location) {
+          return res.status(404).json({
+            error: { message: 'location not found' },
+            status: 'error'
+          });
+        }
+
+        return location.update({
+          name: trimInput(sentenceCase(name)) || location.name,
+          malePopulation: trimInput(malePopulation) || location.malePopulation,
+          femalePopulation: trimInput(femalePopulation) || location.femalePopulation,
+          locality: trimInput(sentenceCase(locality)) || location.locality,
+        })
+          .then((updatedLocation) => {
+            res.status(200).json({
+              message: 'Location information updated successfully',
+              status: 'success',
+              location: updatedLocation
+            });
+          }).catch(next);
       })
       .catch(next);
   }
