@@ -7,6 +7,7 @@ welcomeRoute.all('*', (req, res) => {
     message: 'Welcome to D-beloved\'s Population management API',
     availableEndpoints: {
       createLocation: 'POST /api/location',
+      getLocations: 'GET /api/location',
     }
   });
 });
