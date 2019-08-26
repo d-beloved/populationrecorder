@@ -149,6 +149,45 @@ class LocationController {
       })
       .catch(next);
   }
+
+  /**
+   * @description delete a location in the app
+   * @param  {object} req body of the user's request
+   * @param  {object} res  body of the response message
+   * @param  {function} next next function to be called
+   * @returns {object} The body of the response message
+   */
+  static deleteLocation(req, res, next) {
+    const locationId = parseInt(req.params.locationId, 10);
+    if (isNaN(locationId)) {
+      return res.status(400).json({
+        error: { message: 'please enter a valid Id' },
+        status: 'error'
+      });
+    }
+
+    Location.findOne({
+      where: {
+        id: locationId
+      }
+    })
+      .then((location) => {
+        if (!location) {
+          return res.status(404).json({
+            error: { message: 'Location not found, please check that you are entering the correct id' },
+            status: 'error'
+          });
+        }
+
+        return location.destroy()
+          .then(() => res.status(200).json({
+            message: 'Location successfully deleted',
+            status: 'success'
+          }))
+          .catch(next);
+      })
+      .catch(next);
+  }
 }
 
 export default LocationController;

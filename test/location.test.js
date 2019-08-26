@@ -206,4 +206,39 @@ describe('Tests for location controller', () => {
         });
     });
   });
+
+  describe('Test for delete locations', () => {
+    it('should return an error if a non integer id is inserted', (done) => {
+      chai.request(server).delete('/api/location/a')
+        .end((err, res) => {
+          const { error, status } = res.body;
+          res.should.have.status(400);
+          error.message.should.equal('please enter a valid Id');
+          status.should.equal('error');
+          done();
+        });
+    });
+
+    it('should return 404 id location is not found ', (done) => {
+      chai.request(server).delete('/api/location/4')
+        .end((err, res) => {
+          const { error, status } = res.body;
+          res.should.have.status(404);
+          error.message.should.equal('Location not found, please check that you are entering the correct id');
+          status.should.equal('error');
+          done();
+        });
+    });
+
+    it('should delete a location successfully ', (done) => {
+      chai.request(server).delete('/api/location/1')
+        .end((err, res) => {
+          const { message, status } = res.body;
+          res.should.have.status(200);
+          message.should.equal('Location successfully deleted');
+          status.should.equal('success');
+          done();
+        });
+    });
+  });
 });
